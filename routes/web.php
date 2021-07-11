@@ -41,7 +41,7 @@ Route::get('/', function (Request $request) {
         Post::factory()->count(5)->create();
     }
 
-    $posts = Post::latest()->take(5)->get();
+    $posts = Post::latest()->with('likes')->take(5)->get();
 
     return view('welcome', compact('posts'));
 });

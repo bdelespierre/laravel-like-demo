@@ -81,8 +81,8 @@ class User extends Authenticatable
             return false;
         }
 
-        return $likeable->likes()
-            ->whereHas('user', fn($q) =>  $q->whereId($this->id))
-            ->exists();
+        return $this->likes->contains(
+            fn($like) => $like->likeable_type == get_class($likeable) && $like->likeable_id == $likeable->id
+        );
     }
 }
